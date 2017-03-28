@@ -16,9 +16,8 @@ def translater(text, language):
     response = requests.get(url, params=params)
     return response.json()
 
-translate_language = input('Language:')
-if translate_language == '':
-    translate_language = 'ru'
+
+translate_language = 'ru'
     
 for file in files:
   
