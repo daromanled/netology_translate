@@ -29,5 +29,5 @@ if __name__ == "__main__":
     
     pair_of_languages = start_language + '-' + translate_language
     
-    with open(file_result + '.txt', 'w') as file_with_result:
+    with open(file_result + '.txt', 'w', encoding="utf-8") as file_with_result:
         file_with_result.write(' '.join(translater(text, pair_of_languages)['text']))
