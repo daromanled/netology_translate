@@ -1,28 +1,33 @@
 import requests
 import os
 
-directory = 'Source'
-files = os.listdir(directory)
+if __name__ == "__main__":
 
-def translater(text, language):
-    api_key = 'trnsl.1.1.20170328T084717Z.d8b2934040820452.0f0d6860daf41a6ff6c4be328efbf4f27fe68133'
-    url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
+    def translater(text, language):
+        API_KEY = 'trnsl.1.1.20170328T084717Z.d8b2934040820452.0f0d6860daf41a6ff6c4be328efbf4f27fe68133'
+        URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
+        
+        params = {
+            'key': API_KEY,
+            'text': text,
+            'lang': language,
+        }
+        response = requests.get(URL, params=params)
+        return response.json()  
+
+    start_language = input('Start_language:')
+
+    translate_language = input('Translate_language:')
+    if translate_language == '':
+        translate_language = 'ru'
+        
+    file = input('Name of file:')
+    file_result = input('Name of file with result:')
     
-    params = {
-        'key': api_key,
-        'text': text,
-        'lang': language,
-    }
-    response = requests.get(url, params=params)
-    return response.json()
-
-
-translate_language = 'ru'
+    with open(file + '.txt', 'r') as f:
+        text = f.readlines()
     
-for file in files:
-  
-    with open(os.path.join(directory, file)) as f:
-            text = f.readlines()
-
-    with open('result'+file+'.txt','w') as file:
-        file.write(' '.join(translater(text, translate_language)['text']))
+    pair_of_languages = start_language + '-' + translate_language
+    
+    with open(file_result + '.txt', 'w') as file_with_result:
+        file_with_result.write(' '.join(translater(text, pair_of_languages)['text']))
